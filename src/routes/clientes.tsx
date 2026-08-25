@@ -27,6 +27,16 @@ import { useAuthContext } from "@/components/AuthProvider";
 import { maskCPFCNPJ, maskCEP, maskTelefone } from "@/lib/masks";
 
 export const Route = createFileRoute("/clientes")({
+  head: () => ({
+    meta: [
+      { title: "Clientes — W3-Gotecnologia" },
+      { name: "description", content: "Cadastre e gerencie os clientes da assistência técnica W3-Gotecnologia com dados de contato e endereço." },
+      { property: "og:title", content: "Clientes — W3-Gotecnologia" },
+      { property: "og:description", content: "Cadastre e gerencie os clientes da assistência técnica W3-Gotecnologia com dados de contato e endereço." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: ClientesPage,
 });
 

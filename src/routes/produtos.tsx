@@ -26,6 +26,16 @@ import { supabase, type Produto } from "@/integrations/supabase/client";
 import { useAuthContext } from "@/components/AuthProvider";
 
 export const Route = createFileRoute("/produtos")({
+  head: () => ({
+    meta: [
+      { title: "Produtos e Peças — W3-Gotecnologia" },
+      { name: "description", content: "Controle o estoque de peças e produtos usados nos reparos da W3-Gotecnologia." },
+      { property: "og:title", content: "Produtos e Peças — W3-Gotecnologia" },
+      { property: "og:description", content: "Controle o estoque de peças e produtos usados nos reparos da W3-Gotecnologia." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: ProdutosPage,
 });
 

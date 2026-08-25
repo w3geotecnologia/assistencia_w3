@@ -34,11 +34,11 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "SmartTech — Controle de Assistência Técnica" },
+      { title: "W3-Gotecnologia — Controle de Assistência Técnica" },
       {
         name: "description",
         content:
-          "Sistema completo para gestão de ordens de serviço, clientes e produtos da sua assistência técnica.",
+          "Sistema da W3-Gotecnologia para gestão de ordens de serviço, clientes e produtos da assistência técnica.",
       },
     ],
     links: [{ rel: "stylesheet", href: appCss }],
