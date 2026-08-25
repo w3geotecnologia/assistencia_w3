@@ -26,6 +26,16 @@ import { useAuthContext } from "@/components/AuthProvider";
 import { OrdemServicoDetalheModal } from "@/components/OrdemServicoDetalheModal";
 
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Painel — W3-Gotecnologia Assistência Técnica" },
+      { name: "description", content: "Acompanhe ordens de serviço, faturamento e prazos da assistência técnica W3-Gotecnologia em um só painel." },
+      { property: "og:title", content: "Painel — W3-Gotecnologia Assistência Técnica" },
+      { property: "og:description", content: "Acompanhe ordens de serviço, faturamento e prazos da assistência técnica W3-Gotecnologia em um só painel." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: Dashboard,
 });
 

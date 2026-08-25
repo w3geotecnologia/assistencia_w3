@@ -28,6 +28,16 @@ import { OrdemServicoModal } from "@/components/OrdemServicoModal";
 import { OrdemServicoDetalheModal } from "@/components/OrdemServicoDetalheModal";
 
 export const Route = createFileRoute("/ordens-servico")({
+  head: () => ({
+    meta: [
+      { title: "Ordens de Serviço — W3-Gotecnologia" },
+      { name: "description", content: "Registre, acompanhe e finalize as ordens de serviço da assistência técnica W3-Gotecnologia." },
+      { property: "og:title", content: "Ordens de Serviço — W3-Gotecnologia" },
+      { property: "og:description", content: "Registre, acompanhe e finalize as ordens de serviço da assistência técnica W3-Gotecnologia." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: OrdensServicoPage,
 });
 
