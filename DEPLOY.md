@@ -4,9 +4,9 @@ Este projeto roda como **SPA estático** (TanStack Router em modo client-only co
 
 ## Como o build funciona
 
-- `bun run build` gera os assets em `dist/client/`
-- O TanStack Start prerenderer cria `_shell.html` (a casca SPA) + um `index.html` por rota (`/clientes/`, `/produtos/`, `/ordens-servico/`)
-- O Dockerfile copia `_shell.html` como `index.html` raiz para servir a rota `/`
+- `SPA_BUILD=1 bun run build` gera os assets estáticos em `dist/client/` (é o que o Dockerfile faz)
+- Sem `SPA_BUILD=1`, o build gera também o bundle de servidor (usado pelo preview/publish da Lovable)
+- O prerender cria `index.html` na raiz + um `index.html` por rota (`/clientes/`, `/produtos/`, `/ordens-servico/`)
 - O Nginx faz fallback para `index.html` em qualquer rota desconhecida — o TanStack Router resolve no cliente
 
 ## Variáveis de ambiente (build time)
