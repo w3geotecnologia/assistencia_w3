@@ -83,6 +83,14 @@ export function OrdemServicoDetalheModal({ open, onOpenChange, os }: Props) {
     <tr><td class="label">Valor</td><td colspan="3"><strong>${fmtBRL(os.valor)}</strong></td></tr>
   </table>
 
+  <h2>Envio</h2>
+  <table class="grid">
+    <tr><td class="label">Nº de rastreio</td><td>${escapeHtml(os.numero_rastreio ?? "—")}</td>
+        <td class="label">Valor do frete</td><td>${fmtBRL(os.valor_frete)}</td></tr>
+    <tr><td class="label">Data do envio</td><td>${fmtDate(os.data_envio)}</td>
+        <td class="label">Status do envio</td><td>${escapeHtml(os.status_envio ?? "—")}</td></tr>
+  </table>
+
   <h2>Defeito informado</h2>
   <div class="box">${escapeHtml(os.defeito_informado ?? "—")}</div>
 
@@ -134,6 +142,10 @@ export function OrdemServicoDetalheModal({ open, onOpenChange, os }: Props) {
               <Field label="Data de entrada" value={fmtDate(os.data_entrada)} />
               <Field label="Data de saída" value={fmtDate(os.data_saida)} />
               <Field label="Valor" value={fmtBRL(os.valor)} />
+              <Field label="Nº de rastreio" value={os.numero_rastreio ?? "—"} />
+              <Field label="Valor do frete" value={fmtBRL(os.valor_frete)} />
+              <Field label="Data do envio" value={fmtDate(os.data_envio)} />
+              <Field label="Status do envio" value={os.status_envio ?? "—"} />
             </section>
 
             <Block label="Defeito informado">{os.defeito_informado ?? "—"}</Block>

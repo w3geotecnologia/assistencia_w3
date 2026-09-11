@@ -42,6 +42,10 @@ const empty = {
   data_entrada: new Date().toISOString().slice(0, 10),
   data_saida: "",
   valor: "",
+  numero_rastreio: "",
+  valor_frete: "",
+  data_envio: "",
+  status_envio: "Não enviado",
   fotos: [] as string[],
 };
 
@@ -77,6 +81,10 @@ export function OrdemServicoModal({ open, onOpenChange, editing, nextNumero }: P
         data_entrada: editing.data_entrada ?? new Date().toISOString().slice(0, 10),
         data_saida: editing.data_saida ?? "",
         valor: editing.valor ? String(editing.valor) : "",
+        numero_rastreio: editing.numero_rastreio ?? "",
+        valor_frete: editing.valor_frete ? String(editing.valor_frete) : "",
+        data_envio: editing.data_envio ?? "",
+        status_envio: editing.status_envio ?? "Não enviado",
         fotos: editing.fotos ?? [],
       });
     } else {
@@ -99,6 +107,10 @@ export function OrdemServicoModal({ open, onOpenChange, editing, nextNumero }: P
         data_entrada: form.data_entrada || null,
         data_saida: form.data_saida || null,
         valor: form.valor === "" ? 0 : Number(form.valor),
+        numero_rastreio: form.numero_rastreio || null,
+        valor_frete: form.valor_frete === "" ? 0 : Number(form.valor_frete),
+        data_envio: form.data_envio || null,
+        status_envio: form.status_envio || null,
         fotos: form.fotos,
         user_id: user.id,
       };
@@ -268,6 +280,51 @@ export function OrdemServicoModal({ open, onOpenChange, editing, nextNumero }: P
                 onChange={(e) => setForm({ ...form, valor: e.target.value })}
                 placeholder="0,00"
               />
+            </div>
+
+            <div>
+              <Label>Valor do frete (R$)</Label>
+              <Input
+                type="number"
+                step="0.01"
+                value={form.valor_frete}
+                onChange={(e) => setForm({ ...form, valor_frete: e.target.value })}
+                placeholder="0,00"
+              />
+            </div>
+            <div>
+              <Label>Número de rastreio</Label>
+              <Input
+                value={form.numero_rastreio}
+                onChange={(e) => setForm({ ...form, numero_rastreio: e.target.value })}
+                placeholder="Ex.: AA123456789BR"
+              />
+            </div>
+            <div>
+              <Label>Data do envio</Label>
+              <Input
+                type="date"
+                value={form.data_envio}
+                onChange={(e) => setForm({ ...form, data_envio: e.target.value })}
+              />
+            </div>
+            <div>
+              <Label>Status do envio</Label>
+              <Select
+                value={form.status_envio}
+                onValueChange={(v) => setForm({ ...form, status_envio: v })}
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Não enviado">Não enviado</SelectItem>
+                  <SelectItem value="Postado">Postado</SelectItem>
+                  <SelectItem value="Em trânsito">Em trânsito</SelectItem>
+                  <SelectItem value="Entregue">Entregue</SelectItem>
+                  <SelectItem value="Devolvido">Devolvido</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
 
             <div className="md:col-span-2">
