@@ -275,22 +275,22 @@ export function OrdemServicoModal({ open, onOpenChange, editing, nextNumero }: P
             <div>
               <Label>Valor (R$)</Label>
               <Input
-                type="number"
-                step="0.01"
+                type="text"
+                inputMode="decimal"
                 value={form.valor}
-                onChange={(e) => setForm({ ...form, valor: e.target.value })}
-                placeholder="0,00"
+                onChange={(e) => setForm({ ...form, valor: maskCurrency(e.target.value) })}
+                placeholder="R$ 0,00"
               />
             </div>
 
             <div>
               <Label>Valor do frete (R$)</Label>
               <Input
-                type="number"
-                step="0.01"
+                type="text"
+                inputMode="decimal"
                 value={form.valor_frete}
-                onChange={(e) => setForm({ ...form, valor_frete: e.target.value })}
-                placeholder="0,00"
+                onChange={(e) => setForm({ ...form, valor_frete: maskCurrency(e.target.value) })}
+                placeholder="R$ 0,00"
               />
             </div>
             <div>
