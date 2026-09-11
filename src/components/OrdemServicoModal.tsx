@@ -22,6 +22,7 @@ import { toast } from "sonner";
 import { supabase, type OrdemServico, type Cliente } from "@/integrations/supabase/client";
 import { useAuthContext } from "@/components/AuthProvider";
 import { FotosUpload } from "@/components/FotosUpload";
+import { maskCurrency, parseCurrency } from "@/lib/masks";
 
 type Props = {
   open: boolean;
