@@ -35,3 +35,19 @@ export function maskTelefone(value: string): string {
     .replace(/^(\d{2})(\d)/, "($1) $2")
     .replace(/(\d{5})(\d{1,4})$/, "$1-$2");
 }
+
+export function maskCurrency(value: string | number): string {
+  const raw = typeof value === "number" ? String(Math.round(value * 100)) : value.replace(/\D/g, "");
+  const digits = raw.padStart(3, "0").slice(-14);
+  const integer = digits.slice(0, -2) || "0";
+  const cents = digits.slice(-2);
+  const formattedInteger = Number(integer).toLocaleString("pt-BR");
+  return `R$ ${formattedInteger},${cents}`;
+}
+
+export function parseCurrency(value: string): number {
+  const digits = value.replace(/\D/g, "").padStart(3, "0");
+  const integer = digits.slice(0, -2) || "0";
+  const cents = digits.slice(-2);
+  return Number(`${integer}.${cents}`);
+}
