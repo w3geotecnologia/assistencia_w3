@@ -22,6 +22,7 @@ import { toast } from "sonner";
 import { supabase, type OrdemServico, type Cliente } from "@/integrations/supabase/client";
 import { useAuthContext } from "@/components/AuthProvider";
 import { FotosUpload } from "@/components/FotosUpload";
+import { maskCurrency, parseCurrency } from "@/lib/masks";
 
 type Props = {
   open: boolean;
@@ -41,9 +42,9 @@ const empty = {
   status: "Aguardando",
   data_entrada: new Date().toISOString().slice(0, 10),
   data_saida: "",
-  valor: "",
+  valor: "R$ 0,00",
   numero_rastreio: "",
-  valor_frete: "",
+  valor_frete: "R$ 0,00",
   data_envio: "",
   status_envio: "Não enviado",
   fotos: [] as string[],
@@ -80,9 +81,9 @@ export function OrdemServicoModal({ open, onOpenChange, editing, nextNumero }: P
         status: editing.status ?? "Aguardando",
         data_entrada: editing.data_entrada ?? new Date().toISOString().slice(0, 10),
         data_saida: editing.data_saida ?? "",
-        valor: editing.valor ? String(editing.valor) : "",
+        valor: maskCurrency(editing.valor ?? 0),
         numero_rastreio: editing.numero_rastreio ?? "",
-        valor_frete: editing.valor_frete ? String(editing.valor_frete) : "",
+        valor_frete: maskCurrency(editing.valor_frete ?? 0),
         data_envio: editing.data_envio ?? "",
         status_envio: editing.status_envio ?? "Não enviado",
         fotos: editing.fotos ?? [],
@@ -106,9 +107,9 @@ export function OrdemServicoModal({ open, onOpenChange, editing, nextNumero }: P
         status: form.status,
         data_entrada: form.data_entrada || null,
         data_saida: form.data_saida || null,
-        valor: form.valor === "" ? 0 : Number(form.valor),
+        valor: parseCurrency(form.valor),
         numero_rastreio: form.numero_rastreio || null,
-        valor_frete: form.valor_frete === "" ? 0 : Number(form.valor_frete),
+        valor_frete: parseCurrency(form.valor_frete),
         data_envio: form.data_envio || null,
         status_envio: form.status_envio || null,
         fotos: form.fotos,
@@ -274,22 +275,22 @@ export function OrdemServicoModal({ open, onOpenChange, editing, nextNumero }: P
             <div>
               <Label>Valor (R$)</Label>
               <Input
-                type="number"
-                step="0.01"
+                type="text"
+                inputMode="decimal"
                 value={form.valor}
-                onChange={(e) => setForm({ ...form, valor: e.target.value })}
-                placeholder="0,00"
+                onChange={(e) => setForm({ ...form, valor: maskCurrency(e.target.value) })}
+                placeholder="R$ 0,00"
               />
             </div>
 
             <div>
               <Label>Valor do frete (R$)</Label>
               <Input
-                type="number"
-                step="0.01"
+                type="text"
+                inputMode="decimal"
                 value={form.valor_frete}
-                onChange={(e) => setForm({ ...form, valor_frete: e.target.value })}
-                placeholder="0,00"
+                onChange={(e) => setForm({ ...form, valor_frete: maskCurrency(e.target.value) })}
+                placeholder="R$ 0,00"
               />
             </div>
             <div>
