@@ -29,6 +29,10 @@ export type OrdemServico = {
   data_saida: string | null;
   tipo_transporte: string | null;
   valor: number | null;
+  numero_rastreio: string | null;
+  valor_frete: number | null;
+  data_envio: string | null;
+  status_envio: string | null;
   fotos: string[] | null;
   created_at: string;
   updated_at: string;
