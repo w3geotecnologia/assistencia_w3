@@ -191,40 +191,57 @@ function ClientesPage() {
       <Card>
         <Table>
           <TableHeader>
-            <TableRow>
-              <TableHead>Nome</TableHead>
-              <TableHead>E-mail</TableHead>
-              <TableHead>Telefone</TableHead>
-              <TableHead>Cidade/UF</TableHead>
-              <TableHead className="text-right">Ações</TableHead>
+            <TableRow className="h-12 hover:bg-transparent">
+              <TableHead className="w-[30%] px-5 text-sm font-semibold tracking-wide uppercase text-muted-foreground">
+                Nome
+              </TableHead>
+              <TableHead className="px-5 text-sm font-semibold tracking-wide uppercase text-muted-foreground">
+                E-mail
+              </TableHead>
+              <TableHead className="px-5 text-sm font-semibold tracking-wide uppercase text-muted-foreground">
+                Telefone
+              </TableHead>
+              <TableHead className="px-5 text-sm font-semibold tracking-wide uppercase text-muted-foreground">
+                Cidade/UF
+              </TableHead>
+              <TableHead className="w-[140px] px-5 text-right text-sm font-semibold tracking-wide uppercase text-muted-foreground">
+                Ações
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {isLoading ? (
               <TableRow>
-                <TableCell colSpan={5} className="text-center text-muted-foreground py-8">
+                <TableCell colSpan={5} className="text-center text-muted-foreground py-10">
                   Carregando...
                 </TableCell>
               </TableRow>
             ) : filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={5} className="text-center text-muted-foreground py-8">
+                <TableCell colSpan={5} className="text-center text-muted-foreground py-10">
                   Nenhum cliente encontrado.
                 </TableCell>
               </TableRow>
             ) : (
               filtered.map((c) => (
-                <TableRow key={c.id}>
-                  <TableCell className="font-medium">{c.nome}</TableCell>
-                  <TableCell>{c.email ?? "—"}</TableCell>
-                  <TableCell>{c.telefone ?? "—"}</TableCell>
-                  <TableCell>
+                <TableRow key={c.id} className="h-14 transition-colors">
+                  <TableCell className="px-5 py-4">
+                    <span className="block text-sm font-semibold text-foreground">{c.nome}</span>
+                  </TableCell>
+                  <TableCell className="px-5 py-4 text-sm text-foreground/90">
+                    {c.email ?? "—"}
+                  </TableCell>
+                  <TableCell className="px-5 py-4 text-sm text-foreground/90 whitespace-nowrap">
+                    {c.telefone ?? "—"}
+                  </TableCell>
+                  <TableCell className="px-5 py-4 text-sm text-foreground/90">
                     {[c.cidade, c.estado].filter(Boolean).join(" / ") || "—"}
                   </TableCell>
-                  <TableCell className="text-right">
+                  <TableCell className="px-5 py-4 text-right">
                     <Button
                       size="icon"
                       variant="ghost"
+                      className="h-8 w-8"
                       onClick={() => {
                         setEditing(c);
                         setOpen(true);
@@ -235,6 +252,7 @@ function ClientesPage() {
                     <Button
                       size="icon"
                       variant="ghost"
+                      className="h-8 w-8"
                       onClick={() => {
                         if (confirm(`Excluir ${c.nome}?`)) deleteMutation.mutate(c.id);
                       }}
