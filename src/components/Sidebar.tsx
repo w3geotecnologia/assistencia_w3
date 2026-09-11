@@ -24,7 +24,7 @@ export function Sidebar() {
   const { user, signOut } = useAuthContext();
 
   return (
-    <aside className="hidden md:flex w-64 flex-col border-r bg-card">
+    <aside className="hidden md:flex w-52 flex-col border-r bg-card">
       <div className="flex items-center gap-2 px-6 py-5 border-b">
         <div className="h-9 w-9 rounded-lg bg-primary text-primary-foreground grid place-items-center">
           <Wrench className="h-5 w-5" />
