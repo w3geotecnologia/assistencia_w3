@@ -142,17 +142,31 @@ function OrdensServicoPage() {
         </div>
       </Card>
 
-      <Card>
-        <Table>
+      <Card className="overflow-hidden">
+        <Table className="border-collapse">
           <TableHeader>
-            <TableRow>
-              <TableHead>Nº OS</TableHead>
-              <TableHead>Cliente</TableHead>
-              <TableHead>Equipamento</TableHead>
-              <TableHead>Entrada</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Valor</TableHead>
-              <TableHead className="text-right">Ações</TableHead>
+            <TableRow className="h-10 hover:bg-transparent bg-muted/40">
+              <TableHead className="w-[90px] px-3 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-center">
+                Nº OS
+              </TableHead>
+              <TableHead className="px-3 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-left">
+                Cliente
+              </TableHead>
+              <TableHead className="px-3 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-left">
+                Equipamento
+              </TableHead>
+              <TableHead className="w-[120px] px-3 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-center">
+                Entrada
+              </TableHead>
+              <TableHead className="w-[140px] px-3 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-center">
+                Status
+              </TableHead>
+              <TableHead className="w-[120px] px-3 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-right">
+                Valor
+              </TableHead>
+              <TableHead className="w-[130px] px-3 text-xs font-bold tracking-wide uppercase text-muted-foreground text-center">
+                Ações
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -170,61 +184,72 @@ function OrdensServicoPage() {
               </TableRow>
             ) : (
               filtered.map((os) => (
-                <TableRow key={os.id}>
-                  <TableCell className="font-medium">#{os.numero_os}</TableCell>
-                  <TableCell>{os.cliente}</TableCell>
-                  <TableCell>{os.equipamento}</TableCell>
-                  <TableCell>
+                <TableRow key={os.id} className="h-12 transition-colors border-b border-border last:border-b-0">
+                  <TableCell className="px-3 py-2 text-sm font-medium border-r border-border text-center whitespace-nowrap">
+                    #{os.numero_os}
+                  </TableCell>
+                  <TableCell className="px-3 py-2 text-sm border-r border-border text-left truncate">
+                    {os.cliente}
+                  </TableCell>
+                  <TableCell className="px-3 py-2 text-sm border-r border-border text-left truncate">
+                    {os.equipamento}
+                  </TableCell>
+                  <TableCell className="px-3 py-2 text-sm border-r border-border text-center whitespace-nowrap">
                     {os.data_entrada ? format(new Date(os.data_entrada), "dd/MM/yyyy") : "—"}
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="px-3 py-2 text-sm border-r border-border text-center">
                     <span
-                      className={`text-xs px-2 py-1 rounded-md ${
+                      className={`inline-block text-xs px-2 py-1 rounded-md ${
                         STATUS_COLORS[os.status ?? ""] ?? "bg-secondary text-secondary-foreground"
                       }`}
                     >
                       {os.status ?? "—"}
                     </span>
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="px-3 py-2 text-sm border-r border-border text-right whitespace-nowrap">
                     {Number(os.valor ?? 0).toLocaleString("pt-BR", {
                       style: "currency",
                       currency: "BRL",
                     })}
                   </TableCell>
-                  <TableCell className="text-right">
-                    <Button
-                      size="icon"
-                      variant="ghost"
-                      title="Visualizar"
-                      onClick={() => {
-                        setDetalheOS(os);
-                        setDetalheOpen(true);
-                      }}
-                    >
-                      <Eye className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      size="icon"
-                      variant="ghost"
-                      title="Editar"
-                      onClick={() => {
-                        setEditing(os);
-                        setModalOpen(true);
-                      }}
-                    >
-                      <Pencil className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      size="icon"
-                      variant="ghost"
-                      title="Excluir"
-                      onClick={() => {
-                        if (confirm(`Excluir OS #${os.numero_os}?`)) deleteMutation.mutate(os.id);
-                      }}
-                    >
-                      <Trash2 className="h-4 w-4 text-destructive" />
-                    </Button>
+                  <TableCell className="px-3 py-2 text-center">
+                    <div className="inline-flex items-center justify-center gap-1">
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        className="h-8 w-8"
+                        title="Visualizar"
+                        onClick={() => {
+                          setDetalheOS(os);
+                          setDetalheOpen(true);
+                        }}
+                      >
+                        <Eye className="h-4 w-4" />
+                      </Button>
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        className="h-8 w-8"
+                        title="Editar"
+                        onClick={() => {
+                          setEditing(os);
+                          setModalOpen(true);
+                        }}
+                      >
+                        <Pencil className="h-4 w-4" />
+                      </Button>
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        className="h-8 w-8"
+                        title="Excluir"
+                        onClick={() => {
+                          if (confirm(`Excluir OS #${os.numero_os}?`)) deleteMutation.mutate(os.id);
+                        }}
+                      >
+                        <Trash2 className="h-4 w-4 text-destructive" />
+                      </Button>
+                    </div>
                   </TableCell>
                 </TableRow>
               ))
