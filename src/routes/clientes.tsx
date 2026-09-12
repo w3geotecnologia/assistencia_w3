@@ -209,13 +209,13 @@ function ClientesPage() {
           <TableBody>
             {isLoading ? (
               <TableRow>
-                <TableCell colSpan={5} className="text-center text-muted-foreground py-10">
+                <TableCell colSpan={4} className="text-center text-muted-foreground py-10">
                   Carregando...
                 </TableCell>
               </TableRow>
             ) : filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={5} className="text-center text-muted-foreground py-10">
+                <TableCell colSpan={4} className="text-center text-muted-foreground py-10">
                   Nenhum cliente encontrado.
                 </TableCell>
               </TableRow>
@@ -226,16 +226,23 @@ function ClientesPage() {
                     <span className="block text-sm font-semibold text-foreground truncate">{c.nome}</span>
                   </TableCell>
                   <TableCell className="px-4 py-2 text-sm text-foreground/90 border-r border-border text-center whitespace-nowrap">
-                    {c.email ?? "seuemail@gmail.com.br"}
+                    {c.email || "seuemail@gmail.com.br"}
                   </TableCell>
                   <TableCell className="px-4 py-2 text-sm text-foreground/90 border-r border-border text-center whitespace-nowrap">
                     {c.telefone ?? "—"}
                   </TableCell>
-                  <TableCell className="px-4 py-2 text-sm text-foreground/90 border-r border-border text-center">
-                    {[c.cidade, c.estado].filter(Boolean).join(" / ") || "—"}
-                  </TableCell>
                   <TableCell className="px-4 py-2 text-center">
                     <div className="inline-flex items-center justify-center gap-1">
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        className="h-8 w-8"
+                        asChild
+                      >
+                        <Link to="/clientes/$id" params={{ id: c.id }}>
+                          <Eye className="h-4 w-4 text-info" />
+                        </Link>
+                      </Button>
                       <Button
                         size="icon"
                         variant="ghost"
