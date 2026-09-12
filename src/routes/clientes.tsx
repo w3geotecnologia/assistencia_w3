@@ -192,17 +192,14 @@ function ClientesPage() {
         <Table className="border-collapse">
           <TableHeader>
             <TableRow className="h-10 hover:bg-transparent bg-muted/40">
-              <TableHead className="w-[28%] px-4 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-left">
+              <TableHead className="w-[35%] px-4 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-left">
                 Nome
               </TableHead>
-              <TableHead className="px-4 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-center">
+              <TableHead className="w-[30%] px-4 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-center">
                 E-mail
               </TableHead>
-              <TableHead className="px-4 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-center">
+              <TableHead className="w-[20%] px-4 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-center">
                 Telefone
-              </TableHead>
-              <TableHead className="px-4 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-center">
-                Cidade/UF
               </TableHead>
               <TableHead className="w-[120px] px-4 text-xs font-bold tracking-wide uppercase text-muted-foreground text-center">
                 Ações
