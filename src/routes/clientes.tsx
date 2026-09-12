@@ -188,23 +188,23 @@ function ClientesPage() {
         </div>
       </Card>
 
-      <Card>
-        <Table>
+      <Card className="overflow-hidden">
+        <Table className="border-collapse">
           <TableHeader>
-            <TableRow className="h-12 hover:bg-transparent">
-              <TableHead className="w-[30%] px-5 text-sm font-semibold tracking-wide uppercase text-muted-foreground">
+            <TableRow className="h-10 hover:bg-transparent bg-muted/40">
+              <TableHead className="w-[28%] px-4 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-left">
                 Nome
               </TableHead>
-              <TableHead className="px-5 text-sm font-semibold tracking-wide uppercase text-muted-foreground">
+              <TableHead className="px-4 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-center">
                 E-mail
               </TableHead>
-              <TableHead className="px-5 text-sm font-semibold tracking-wide uppercase text-muted-foreground">
+              <TableHead className="px-4 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-center">
                 Telefone
               </TableHead>
-              <TableHead className="px-5 text-sm font-semibold tracking-wide uppercase text-muted-foreground">
+              <TableHead className="px-4 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-center">
                 Cidade/UF
               </TableHead>
-              <TableHead className="w-[140px] px-5 text-right text-sm font-semibold tracking-wide uppercase text-muted-foreground">
+              <TableHead className="w-[120px] px-4 text-xs font-bold tracking-wide uppercase text-muted-foreground text-center">
                 Ações
               </TableHead>
             </TableRow>
@@ -224,41 +224,43 @@ function ClientesPage() {
               </TableRow>
             ) : (
               filtered.map((c) => (
-                <TableRow key={c.id} className="h-14 transition-colors">
-                  <TableCell className="px-5 py-4">
-                    <span className="block text-sm font-semibold text-foreground">{c.nome}</span>
+                <TableRow key={c.id} className="h-12 transition-colors border-b border-border last:border-b-0">
+                  <TableCell className="px-4 py-2 border-r border-border text-left">
+                    <span className="block text-sm font-semibold text-foreground truncate">{c.nome}</span>
                   </TableCell>
-                  <TableCell className="px-5 py-4 text-sm text-foreground/90">
-                    {c.email ?? "—"}
+                  <TableCell className="px-4 py-2 text-sm text-foreground/90 border-r border-border text-center whitespace-nowrap">
+                    {c.email ?? "seuemail@gmail.com.br"}
                   </TableCell>
-                  <TableCell className="px-5 py-4 text-sm text-foreground/90 whitespace-nowrap">
+                  <TableCell className="px-4 py-2 text-sm text-foreground/90 border-r border-border text-center whitespace-nowrap">
                     {c.telefone ?? "—"}
                   </TableCell>
-                  <TableCell className="px-5 py-4 text-sm text-foreground/90">
+                  <TableCell className="px-4 py-2 text-sm text-foreground/90 border-r border-border text-center">
                     {[c.cidade, c.estado].filter(Boolean).join(" / ") || "—"}
                   </TableCell>
-                  <TableCell className="px-5 py-4 text-right">
-                    <Button
-                      size="icon"
-                      variant="ghost"
-                      className="h-8 w-8"
-                      onClick={() => {
-                        setEditing(c);
-                        setOpen(true);
-                      }}
-                    >
-                      <Pencil className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      size="icon"
-                      variant="ghost"
-                      className="h-8 w-8"
-                      onClick={() => {
-                        if (confirm(`Excluir ${c.nome}?`)) deleteMutation.mutate(c.id);
-                      }}
-                    >
-                      <Trash2 className="h-4 w-4 text-destructive" />
-                    </Button>
+                  <TableCell className="px-4 py-2 text-center">
+                    <div className="inline-flex items-center justify-center gap-1">
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        className="h-8 w-8"
+                        onClick={() => {
+                          setEditing(c);
+                          setOpen(true);
+                        }}
+                      >
+                        <Pencil className="h-4 w-4" />
+                      </Button>
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        className="h-8 w-8"
+                        onClick={() => {
+                          if (confirm(`Excluir ${c.nome}?`)) deleteMutation.mutate(c.id);
+                        }}
+                      >
+                        <Trash2 className="h-4 w-4 text-destructive" />
+                      </Button>
+                    </div>
                   </TableCell>
                 </TableRow>
               ))
