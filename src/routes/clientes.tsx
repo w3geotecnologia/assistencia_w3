@@ -1,7 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Plus, Pencil, Trash2, Search } from "lucide-react";
+import { Plus, Pencil, Trash2, Search, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -192,17 +192,14 @@ function ClientesPage() {
         <Table className="border-collapse">
           <TableHeader>
             <TableRow className="h-10 hover:bg-transparent bg-muted/40">
-              <TableHead className="w-[28%] px-4 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-left">
+              <TableHead className="w-[35%] px-4 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-left">
                 Nome
               </TableHead>
-              <TableHead className="px-4 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-center">
+              <TableHead className="w-[30%] px-4 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-center">
                 E-mail
               </TableHead>
-              <TableHead className="px-4 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-center">
+              <TableHead className="w-[20%] px-4 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-center">
                 Telefone
-              </TableHead>
-              <TableHead className="px-4 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-center">
-                Cidade/UF
               </TableHead>
               <TableHead className="w-[120px] px-4 text-xs font-bold tracking-wide uppercase text-muted-foreground text-center">
                 Ações
@@ -212,13 +209,13 @@ function ClientesPage() {
           <TableBody>
             {isLoading ? (
               <TableRow>
-                <TableCell colSpan={5} className="text-center text-muted-foreground py-10">
+                <TableCell colSpan={4} className="text-center text-muted-foreground py-10">
                   Carregando...
                 </TableCell>
               </TableRow>
             ) : filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={5} className="text-center text-muted-foreground py-10">
+                <TableCell colSpan={4} className="text-center text-muted-foreground py-10">
                   Nenhum cliente encontrado.
                 </TableCell>
               </TableRow>
@@ -229,16 +226,23 @@ function ClientesPage() {
                     <span className="block text-sm font-semibold text-foreground truncate">{c.nome}</span>
                   </TableCell>
                   <TableCell className="px-4 py-2 text-sm text-foreground/90 border-r border-border text-center whitespace-nowrap">
-                    {c.email ?? "seuemail@gmail.com.br"}
+                    {c.email || "seuemail@gmail.com.br"}
                   </TableCell>
                   <TableCell className="px-4 py-2 text-sm text-foreground/90 border-r border-border text-center whitespace-nowrap">
                     {c.telefone ?? "—"}
                   </TableCell>
-                  <TableCell className="px-4 py-2 text-sm text-foreground/90 border-r border-border text-center">
-                    {[c.cidade, c.estado].filter(Boolean).join(" / ") || "—"}
-                  </TableCell>
                   <TableCell className="px-4 py-2 text-center">
                     <div className="inline-flex items-center justify-center gap-1">
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        className="h-8 w-8"
+                        asChild
+                      >
+                        <Link to="/clientes/$id" params={{ id: c.id }}>
+                          <Eye className="h-4 w-4 text-info" />
+                        </Link>
+                      </Button>
                       <Button
                         size="icon"
                         variant="ghost"
