@@ -1,0 +1,369 @@
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Plus, Pencil, Trash2, Search, Eye } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card } from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { toast } from "sonner";
+import { supabase, type Cliente } from "@/integrations/supabase/client";
+import { useAuthContext } from "@/components/AuthProvider";
+import { maskCPFCNPJ, maskCEP, maskTelefone } from "@/lib/masks";
+
+export const Route = createFileRoute("/clientes/")({
+  head: () => ({
+    meta: [
+      { title: "Clientes — W3-Gotecnologia" },
+      { name: "description", content: "Cadastre e gerencie os clientes da assistência técnica W3-Gotecnologia com dados de contato e endereço." },
+      { property: "og:title", content: "Clientes — W3-Gotecnologia" },
+      { property: "og:description", content: "Cadastre e gerencie os clientes da assistência técnica W3-Gotecnologia com dados de contato e endereço." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
+  component: ClientesPage,
+});
+
+const empty = {
+  nome: "",
+  email: "",
+  telefone: "",
+  cpf: "",
+  endereco: "",
+  cidade: "",
+  estado: "",
+  cep: "",
+};
+
+function ClientesPage() {
+  const { user } = useAuthContext();
+  const qc = useQueryClient();
+  const [search, setSearch] = useState("");
+  const [open, setOpen] = useState(false);
+  const [editing, setEditing] = useState<Cliente | null>(null);
+  const [form, setForm] = useState(empty);
+
+  const { data: clientes = [], isLoading } = useQuery({
+    queryKey: ["clientes", user?.id],
+    enabled: !!user,
+    queryFn: async (): Promise<Cliente[]> => {
+      const { data, error } = await supabase.from("clientes").select("*").order("nome");
+      if (error) throw error;
+      return data ?? [];
+    },
+  });
+
+  useEffect(() => {
+    if (editing) {
+      setForm({
+        nome: editing.nome,
+        email: editing.email ?? "",
+        telefone: editing.telefone ?? "",
+        cpf: editing.cpf ?? "",
+        endereco: editing.endereco ?? "",
+        cidade: editing.cidade ?? "",
+        estado: editing.estado ?? "",
+        cep: editing.cep ?? "",
+      });
+    } else {
+      setForm(empty);
+    }
+  }, [editing, open]);
+
+  const saveMutation = useMutation({
+    mutationFn: async () => {
+      if (!user) throw new Error("Não autenticado");
+      const payload = {
+        nome: form.nome,
+        email: form.email || null,
+        telefone: form.telefone || null,
+        cpf: form.cpf || null,
+        endereco: form.endereco || null,
+        cidade: form.cidade || null,
+        estado: form.estado || null,
+        cep: form.cep || null,
+        user_id: user.id,
+      };
+      if (editing) {
+        const { error } = await supabase.from("clientes").update(payload).eq("id", editing.id);
+        if (error) throw error;
+      } else {
+        const { error } = await supabase.from("clientes").insert(payload);
+        if (error) throw error;
+      }
+    },
+    onSuccess: () => {
+      toast.success(editing ? "Cliente atualizado" : "Cliente cadastrado");
+      qc.invalidateQueries({ queryKey: ["clientes"] });
+      qc.invalidateQueries({ queryKey: ["clientes-count"] });
+      setOpen(false);
+    },
+    onError: (e: Error) => toast.error(e.message),
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: async (id: string) => {
+      const { error } = await supabase.from("clientes").delete().eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      toast.success("Cliente excluído");
+      qc.invalidateQueries({ queryKey: ["clientes"] });
+      qc.invalidateQueries({ queryKey: ["clientes-count"] });
+    },
+    onError: (e: Error) => toast.error(e.message),
+  });
+
+  const handleCEPBlur = async (e: React.FocusEvent<HTMLInputElement>) => {
+    const digits = e.target.value.replace(/\D/g, "");
+    if (digits.length !== 8) return;
+    try {
+      const res = await fetch(`https://viacep.com.br/ws/${digits}/json/`);
+      const data = await res.json();
+      if (data.erro) {
+        toast.error("CEP não encontrado");
+        return;
+      }
+      setForm((f) => ({
+        ...f,
+        endereco: [data.logradouro, data.bairro].filter(Boolean).join(", ") || f.endereco,
+        cidade: data.localidade || f.cidade,
+        estado: data.uf || f.estado,
+      }));
+    } catch {
+      toast.error("Erro ao buscar CEP");
+    }
+  };
+
+  const filtered = clientes.filter(
+    (c) =>
+      !search ||
+      c.nome.toLowerCase().includes(search.toLowerCase()) ||
+      (c.email ?? "").toLowerCase().includes(search.toLowerCase()) ||
+      (c.telefone ?? "").includes(search),
+  );
+
+  return (
+    <div className="space-y-6">
+      <header className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Clientes</h1>
+          <p className="text-muted-foreground mt-1">{clientes.length} cliente(s)</p>
+        </div>
+        <Button
+          onClick={() => {
+            setEditing(null);
+            setOpen(true);
+          }}
+        >
+          <Plus className="h-4 w-4 mr-2" /> Novo cliente
+        </Button>
+      </header>
+
+      <Card className="p-4">
+        <div className="relative">
+          <Search className="h-4 w-4 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+          <Input
+            placeholder="Buscar por nome, e-mail ou telefone"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="pl-9"
+          />
+        </div>
+      </Card>
+
+      <Card className="overflow-hidden">
+        <Table className="border-collapse">
+          <TableHeader>
+            <TableRow className="h-10 hover:bg-transparent bg-muted/40">
+              <TableHead className="w-[35%] px-4 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-left">
+                Nome
+              </TableHead>
+              <TableHead className="w-[30%] px-4 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-center">
+                E-mail
+              </TableHead>
+              <TableHead className="w-[20%] px-4 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-center">
+                Telefone
+              </TableHead>
+              <TableHead className="w-[120px] px-4 text-xs font-bold tracking-wide uppercase text-muted-foreground text-center">
+                Ações
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {isLoading ? (
+              <TableRow>
+                <TableCell colSpan={4} className="text-center text-muted-foreground py-10">
+                  Carregando...
+                </TableCell>
+              </TableRow>
+            ) : filtered.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={4} className="text-center text-muted-foreground py-10">
+                  Nenhum cliente encontrado.
+                </TableCell>
+              </TableRow>
+            ) : (
+              filtered.map((c) => (
+                <TableRow key={c.id} className="h-12 transition-colors border-b border-border last:border-b-0">
+                  <TableCell className="px-4 py-2 border-r border-border text-left">
+                    <span className="block text-sm font-semibold text-foreground truncate">{c.nome}</span>
+                  </TableCell>
+                  <TableCell className="px-4 py-2 text-sm text-foreground/90 border-r border-border text-center whitespace-nowrap">
+                    {c.email || "seuemail@gmail.com.br"}
+                  </TableCell>
+                  <TableCell className="px-4 py-2 text-sm text-foreground/90 border-r border-border text-center whitespace-nowrap">
+                    {c.telefone ?? "—"}
+                  </TableCell>
+                  <TableCell className="px-4 py-2 text-center">
+                    <div className="inline-flex items-center justify-center gap-1">
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        className="h-8 w-8"
+                        asChild
+                      >
+                        <Link to="/clientes/$id" params={{ id: c.id }}>
+                          <Eye className="h-4 w-4 text-info" />
+                        </Link>
+                      </Button>
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        className="h-8 w-8"
+                        onClick={() => {
+                          setEditing(c);
+                          setOpen(true);
+                        }}
+                      >
+                        <Pencil className="h-4 w-4" />
+                      </Button>
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        className="h-8 w-8"
+                        onClick={() => {
+                          if (confirm(`Excluir ${c.nome}?`)) deleteMutation.mutate(c.id);
+                        }}
+                      >
+                        <Trash2 className="h-4 w-4 text-destructive" />
+                      </Button>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
+          </TableBody>
+        </Table>
+      </Card>
+
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="max-w-xl">
+          <DialogHeader>
+            <DialogTitle>{editing ? "Editar cliente" : "Novo cliente"}</DialogTitle>
+          </DialogHeader>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              saveMutation.mutate();
+            }}
+            className="space-y-3"
+          >
+            <div>
+              <Label>Nome *</Label>
+              <Input
+                value={form.nome}
+                onChange={(e) => setForm({ ...form, nome: e.target.value })}
+                required
+              />
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <Label>E-mail</Label>
+                <Input
+                  type="email"
+                  value={form.email}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                />
+              </div>
+              <div>
+                <Label>Telefone</Label>
+                <Input
+                  value={form.telefone}
+                  onChange={(e) => setForm({ ...form, telefone: maskTelefone(e.target.value) })}
+                  placeholder="(00) 00000-0000"
+                  inputMode="numeric"
+                />
+              </div>
+              <div>
+                <Label>CPF/CNPJ</Label>
+                <Input
+                  value={form.cpf}
+                  onChange={(e) => setForm({ ...form, cpf: maskCPFCNPJ(e.target.value) })}
+                  placeholder="000.000.000-00"
+                  inputMode="numeric"
+                />
+              </div>
+              <div>
+                <Label>CEP</Label>
+                <Input
+                  value={form.cep}
+                  onChange={(e) => setForm({ ...form, cep: maskCEP(e.target.value) })}
+                  onBlur={handleCEPBlur}
+                  placeholder="00000-000"
+                  inputMode="numeric"
+                />
+              </div>
+              <div className="col-span-2">
+                <Label>Endereço</Label>
+                <Input
+                  value={form.endereco}
+                  onChange={(e) => setForm({ ...form, endereco: e.target.value })}
+                />
+              </div>
+              <div>
+                <Label>Cidade</Label>
+                <Input
+                  value={form.cidade}
+                  onChange={(e) => setForm({ ...form, cidade: e.target.value })}
+                />
+              </div>
+              <div>
+                <Label>Estado</Label>
+                <Input
+                  value={form.estado}
+                  onChange={(e) => setForm({ ...form, estado: e.target.value })}
+                  maxLength={2}
+                />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button type="button" variant="outline" onClick={() => setOpen(false)}>
+                Cancelar
+              </Button>
+              <Button type="submit" disabled={saveMutation.isPending}>
+                {saveMutation.isPending ? "Salvando..." : "Salvar"}
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+}
