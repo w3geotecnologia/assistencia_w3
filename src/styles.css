@@ -157,3 +157,20 @@
     color: var(--color-foreground);
   }
 }
+
+@media (min-width: 48rem) {
+  .app-shell:has(.service-data-table:hover) .app-sidebar {
+    width: 3.75rem;
+  }
+
+  .app-shell:has(.service-data-table:hover) .app-sidebar .sidebar-copy {
+    width: 0;
+    overflow: hidden;
+    opacity: 0;
+  }
+
+  .app-shell:has(.service-data-table:hover) .app-sidebar nav a {
+    justify-content: center;
+    gap: 0;
+  }
+}

@@ -161,9 +161,9 @@ function ClientesPage() {
 
   return (
     <div className="space-y-6">
-      <header className="flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Clientes</h1>
+      <header className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 sm:flex sm:flex-wrap sm:justify-between">
+        <div className="min-w-0">
+          <h1 className="truncate text-2xl font-bold sm:text-3xl">Clientes</h1>
           <p className="text-muted-foreground mt-1">{clientes.length} cliente(s)</p>
         </div>
         <Button
@@ -188,8 +188,8 @@ function ClientesPage() {
         </div>
       </Card>
 
-      <Card className="overflow-hidden">
-        <Table className="border-collapse">
+      <Card className="service-data-table overflow-hidden">
+        <Table className="min-w-[680px] table-fixed border-collapse">
           <TableHeader>
             <TableRow className="h-10 hover:bg-transparent bg-muted/40">
               <TableHead className="w-[35%] px-4 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-left">
@@ -201,7 +201,7 @@ function ClientesPage() {
               <TableHead className="w-[20%] px-4 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-center">
                 Telefone
               </TableHead>
-              <TableHead className="w-[120px] px-4 text-xs font-bold tracking-wide uppercase text-muted-foreground text-center">
+              <TableHead className="sticky right-0 z-10 w-[120px] bg-muted px-4 text-center text-xs font-bold uppercase text-muted-foreground">
                 Ações
               </TableHead>
             </TableRow>
@@ -231,13 +231,14 @@ function ClientesPage() {
                   <TableCell className="px-4 py-2 text-sm text-foreground/90 border-r border-border text-center whitespace-nowrap">
                     {c.telefone ?? "—"}
                   </TableCell>
-                  <TableCell className="px-4 py-2 text-center">
+                  <TableCell className="sticky right-0 z-10 bg-card px-4 py-2 text-center">
                     <div className="inline-flex items-center justify-center gap-1">
                       <Button
                         size="icon"
                         variant="ghost"
                         className="h-8 w-8"
                         asChild
+                        title="Visualizar cliente"
                       >
                         <Link to="/clientes/$id" params={{ id: c.id }}>
                           <Eye className="h-4 w-4 text-info" />
@@ -247,6 +248,7 @@ function ClientesPage() {
                         size="icon"
                         variant="ghost"
                         className="h-8 w-8"
+                        title="Editar cliente"
                         onClick={() => {
                           setEditing(c);
                           setOpen(true);
@@ -258,6 +260,7 @@ function ClientesPage() {
                         size="icon"
                         variant="ghost"
                         className="h-8 w-8"
+                        title="Excluir cliente"
                         onClick={() => {
                           if (confirm(`Excluir ${c.nome}?`)) deleteMutation.mutate(c.id);
                         }}
