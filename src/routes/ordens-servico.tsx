@@ -155,14 +155,8 @@ function OrdensServicoPage() {
               <TableHead className="px-3 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-left">
                 Equipamento
               </TableHead>
-              <TableHead className="w-[120px] px-3 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-center">
-                Entrada
-              </TableHead>
               <TableHead className="w-[140px] px-3 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-center">
                 Status
-              </TableHead>
-              <TableHead className="w-[120px] px-3 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-right">
-                Valor
               </TableHead>
               <TableHead className="w-[130px] px-3 text-xs font-bold tracking-wide uppercase text-muted-foreground text-center">
                 Ações
@@ -172,13 +166,13 @@ function OrdensServicoPage() {
           <TableBody>
             {isLoading ? (
               <TableRow>
-                <TableCell colSpan={7} className="text-center text-muted-foreground py-8">
+                <TableCell colSpan={5} className="text-center text-muted-foreground py-8">
                   Carregando...
                 </TableCell>
               </TableRow>
             ) : filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={7} className="text-center text-muted-foreground py-8">
+                <TableCell colSpan={5} className="text-center text-muted-foreground py-8">
                   Nenhuma OS encontrada.
                 </TableCell>
               </TableRow>
@@ -194,9 +188,6 @@ function OrdensServicoPage() {
                   <TableCell className="px-3 py-2 text-sm border-r border-border text-left truncate">
                     {os.equipamento}
                   </TableCell>
-                  <TableCell className="px-3 py-2 text-sm border-r border-border text-center whitespace-nowrap">
-                    {os.data_entrada ? format(new Date(os.data_entrada), "dd/MM/yyyy") : "—"}
-                  </TableCell>
                   <TableCell className="px-3 py-2 text-sm border-r border-border text-center">
                     <span
                       className={`inline-block text-xs px-2 py-1 rounded-md ${
@@ -205,12 +196,6 @@ function OrdensServicoPage() {
                     >
                       {os.status ?? "—"}
                     </span>
-                  </TableCell>
-                  <TableCell className="px-3 py-2 text-sm border-r border-border text-right whitespace-nowrap">
-                    {Number(os.valor ?? 0).toLocaleString("pt-BR", {
-                      style: "currency",
-                      currency: "BRL",
-                    })}
                   </TableCell>
                   <TableCell className="px-3 py-2 text-center">
                     <div className="inline-flex items-center justify-center gap-1">
