@@ -98,9 +98,9 @@ function OrdensServicoPage() {
 
   return (
     <div className="space-y-6">
-      <header className="flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Ordens de Serviço</h1>
+      <header className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 sm:flex sm:flex-wrap sm:justify-between">
+        <div className="min-w-0">
+          <h1 className="truncate text-2xl font-bold sm:text-3xl">Ordens de Serviço</h1>
           <p className="text-muted-foreground mt-1">
             {ordens.length} ordem(ns) cadastrada(s)
           </p>
@@ -142,8 +142,8 @@ function OrdensServicoPage() {
         </div>
       </Card>
 
-      <Card className="overflow-hidden">
-        <Table className="border-collapse">
+      <Card className="service-data-table overflow-hidden">
+        <Table className="min-w-[720px] table-fixed border-collapse">
           <TableHeader>
             <TableRow className="h-10 hover:bg-transparent bg-muted/40">
               <TableHead className="w-[90px] px-3 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-center">
@@ -158,7 +158,7 @@ function OrdensServicoPage() {
               <TableHead className="w-[140px] px-3 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-center">
                 Status
               </TableHead>
-              <TableHead className="w-[130px] px-3 text-xs font-bold tracking-wide uppercase text-muted-foreground text-center">
+              <TableHead className="sticky right-0 z-10 w-[130px] bg-muted px-3 text-center text-xs font-bold uppercase text-muted-foreground">
                 Ações
               </TableHead>
             </TableRow>
@@ -197,7 +197,7 @@ function OrdensServicoPage() {
                       {os.status ?? "—"}
                     </span>
                   </TableCell>
-                  <TableCell className="px-3 py-2 text-center">
+                  <TableCell className="sticky right-0 z-10 bg-card px-3 py-2 text-center">
                     <div className="inline-flex items-center justify-center gap-1">
                       <Button
                         size="icon"

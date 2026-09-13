@@ -24,12 +24,12 @@ export function Sidebar() {
   const { user, signOut } = useAuthContext();
 
   return (
-    <aside className="hidden md:flex w-52 flex-col border-r bg-card">
-      <div className="flex items-center gap-2 px-6 py-5 border-b">
+    <aside className="app-sidebar hidden w-52 shrink-0 flex-col overflow-hidden border-r bg-card transition-[width] duration-200 md:flex">
+      <div className="flex items-center gap-2 px-3 py-5 border-b">
         <div className="h-9 w-9 rounded-lg bg-primary text-primary-foreground grid place-items-center">
           <Wrench className="h-5 w-5" />
         </div>
-        <div>
+        <div className="sidebar-copy min-w-0 whitespace-nowrap transition-opacity duration-150">
           <p className="text-sm font-bold leading-tight">SmarTech</p>
           <p className="text-xs text-muted-foreground">Controle de OS</p>
         </div>
@@ -52,8 +52,8 @@ export function Sidebar() {
                   : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
               )}
             >
-              <Icon className="h-4 w-4" />
-              {item.label}
+               <Icon className="h-4 w-4 shrink-0" />
+               <span className="sidebar-copy whitespace-nowrap transition-opacity duration-150">{item.label}</span>
             </Link>
           );
         })}
