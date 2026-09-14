@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Wrench } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -43,11 +42,11 @@ export function AuthForm() {
     <div className="min-h-screen grid place-items-center bg-gradient-to-br from-background via-background to-accent/30 p-4">
       <Card className="w-full max-w-md p-8 shadow-xl">
         <div className="flex flex-col items-center mb-6">
-          <div className="h-12 w-12 rounded-xl bg-primary text-primary-foreground grid place-items-center mb-3">
-            <Wrench className="h-6 w-6" />
+          <div className="h-12 w-12 rounded-xl bg-primary text-primary-foreground grid place-items-center mb-3 overflow-hidden">
+            <img src="/favicon.png" alt="W3-Gotecnologia" className="h-8 w-8 object-contain" />
           </div>
-          <h1 className="text-2xl font-bold">SmarTech</h1>
-          <p className="text-sm text-muted-foreground">Sistema de controle de assistência técnica</p>
+          <h1 className="text-2xl font-bold">W3-Gotecnologia</h1>
+          <p className="text-sm text-muted-foreground">Assistência Técnica</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
