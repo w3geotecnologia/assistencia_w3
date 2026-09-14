@@ -5,7 +5,7 @@ import {
   Users,
   Package,
   LogOut,
-  Wrench,
+  Settings,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuthContext } from "@/components/AuthProvider";
