@@ -145,20 +145,20 @@ function OrdensServicoPage() {
       <Card className="service-data-table overflow-hidden">
         <Table className="min-w-[720px] table-fixed border-collapse">
           <TableHeader>
-            <TableRow className="h-10 hover:bg-transparent bg-muted/40">
-              <TableHead className="w-[90px] px-3 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-center">
+            <TableRow className="h-12 hover:bg-transparent bg-muted/40">
+              <TableHead className="w-[90px] px-4 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-center">
                 Nº OS
               </TableHead>
-              <TableHead className="px-3 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-left">
+              <TableHead className="w-[30%] px-4 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-left">
                 Cliente
               </TableHead>
-              <TableHead className="px-3 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-left">
+              <TableHead className="w-[25%] px-4 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-left">
                 Equipamento
               </TableHead>
-              <TableHead className="w-[140px] px-3 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-center">
+              <TableHead className="w-[140px] px-4 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-center">
                 Status
               </TableHead>
-              <TableHead className="sticky right-0 z-10 w-[130px] bg-muted px-3 text-center text-xs font-bold uppercase text-muted-foreground">
+              <TableHead className="sticky right-0 z-10 w-[130px] bg-muted px-4 text-center text-xs font-bold uppercase text-muted-foreground">
                 Ações
               </TableHead>
             </TableRow>
