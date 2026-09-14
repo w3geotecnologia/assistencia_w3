@@ -41,7 +41,10 @@ export const Route = createRootRoute({
           "Sistema da W3-Gotecnologia para gestão de ordens de serviço, clientes e produtos da assistência técnica.",
       },
     ],
-    links: [{ rel: "stylesheet", href: appCss }],
+    links: [
+      { rel: "stylesheet", href: appCss },
+      { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
+    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,

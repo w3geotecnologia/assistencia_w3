@@ -145,20 +145,20 @@ function OrdensServicoPage() {
       <Card className="service-data-table overflow-hidden">
         <Table className="min-w-[720px] table-fixed border-collapse">
           <TableHeader>
-            <TableRow className="h-10 hover:bg-transparent bg-muted/40">
-              <TableHead className="w-[90px] px-3 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-center">
+            <TableRow className="h-12 hover:bg-transparent bg-muted/40">
+              <TableHead className="w-[90px] px-4 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-center">
                 Nº OS
               </TableHead>
-              <TableHead className="px-3 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-left">
+              <TableHead className="w-[30%] px-4 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-left">
                 Cliente
               </TableHead>
-              <TableHead className="px-3 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-left">
+              <TableHead className="w-[25%] px-4 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-left">
                 Equipamento
               </TableHead>
-              <TableHead className="w-[140px] px-3 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-center">
+              <TableHead className="w-[140px] px-4 text-xs font-bold tracking-wide uppercase text-muted-foreground border-r border-border text-center">
                 Status
               </TableHead>
-              <TableHead className="sticky right-0 z-10 w-[130px] bg-muted px-3 text-center text-xs font-bold uppercase text-muted-foreground">
+              <TableHead className="sticky right-0 z-10 w-[130px] bg-muted px-4 text-center text-xs font-bold uppercase text-muted-foreground">
                 Ações
               </TableHead>
             </TableRow>
@@ -166,29 +166,29 @@ function OrdensServicoPage() {
           <TableBody>
             {isLoading ? (
               <TableRow>
-                <TableCell colSpan={5} className="text-center text-muted-foreground py-8">
+                <TableCell colSpan={5} className="text-center text-muted-foreground py-10">
                   Carregando...
                 </TableCell>
               </TableRow>
             ) : filtered.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={5} className="text-center text-muted-foreground py-8">
+                <TableCell colSpan={5} className="text-center text-muted-foreground py-10">
                   Nenhuma OS encontrada.
                 </TableCell>
               </TableRow>
             ) : (
               filtered.map((os) => (
                 <TableRow key={os.id} className="h-12 transition-colors border-b border-border last:border-b-0">
-                  <TableCell className="px-3 py-2 text-sm font-medium border-r border-border text-center whitespace-nowrap">
+                  <TableCell className="px-4 py-2 text-sm font-semibold border-r border-border text-center whitespace-nowrap">
                     #{os.numero_os}
                   </TableCell>
-                  <TableCell className="px-3 py-2 text-sm border-r border-border text-left truncate">
-                    {os.cliente}
+                  <TableCell className="px-4 py-2 border-r border-border text-left truncate">
+                    <span className="block text-sm font-semibold text-foreground truncate">{os.cliente}</span>
                   </TableCell>
-                  <TableCell className="px-3 py-2 text-sm border-r border-border text-left truncate">
+                  <TableCell className="px-4 py-2 text-sm text-foreground/90 border-r border-border text-left truncate">
                     {os.equipamento}
                   </TableCell>
-                  <TableCell className="px-3 py-2 text-sm border-r border-border text-center">
+                  <TableCell className="px-4 py-2 text-sm border-r border-border text-center">
                     <span
                       className={`inline-block text-xs px-2 py-1 rounded-md ${
                         STATUS_COLORS[os.status ?? ""] ?? "bg-secondary text-secondary-foreground"
@@ -197,7 +197,7 @@ function OrdensServicoPage() {
                       {os.status ?? "—"}
                     </span>
                   </TableCell>
-                  <TableCell className="sticky right-0 z-10 bg-card px-3 py-2 text-center">
+                  <TableCell className="sticky right-0 z-10 bg-card px-4 py-2 text-center">
                     <div className="inline-flex items-center justify-center gap-1">
                       <Button
                         size="icon"
