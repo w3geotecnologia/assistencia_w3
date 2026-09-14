@@ -5,7 +5,6 @@ import {
   Users,
   Package,
   LogOut,
-  Settings,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuthContext } from "@/components/AuthProvider";
