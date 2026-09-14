@@ -27,7 +27,7 @@ export function Sidebar() {
     <aside className="app-sidebar hidden w-52 shrink-0 flex-col overflow-hidden border-r bg-card transition-[width] duration-200 md:flex">
       <div className="flex items-center gap-2 px-3 py-5 border-b">
         <div className="h-9 w-9 rounded-lg bg-primary text-primary-foreground grid place-items-center">
-          <Wrench className="h-5 w-5" />
+          <Settings className="h-5 w-5" />
         </div>
         <div className="sidebar-copy min-w-0 whitespace-nowrap transition-opacity duration-150">
           <p className="text-sm font-bold leading-tight">SmarTech</p>
