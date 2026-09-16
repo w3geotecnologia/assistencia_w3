@@ -90,7 +90,8 @@ export function OrdemServicoDetalheModal({ open, onOpenChange, os }: Props) {
   <h2>Observações</h2>
   <div class="box">${escapeHtml(os.observacoes ?? "—")}</div>
 
-  ${fotos ? `<h2>Fotos do equipamento</h2><div class="fotos">${fotos}</div>` : ""}
+  <h2>Fotos do equipamento</h2>
+  <div class="fotos">${fotos || '<span style="font-size:12px;color:#999;">Nenhuma foto anexada (até 3).</span>'}</div>
 
   <h2>Valor total dos serviços</h2>
   <p class="total"><strong>${fmtBRL(os.valor)}</strong></p>
