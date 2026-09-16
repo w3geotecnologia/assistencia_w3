@@ -59,6 +59,7 @@ export function OrdemServicoDetalheModal({ open, onOpenChange, os }: Props) {
   .box { border:1px solid #ddd; padding:10px 12px; border-radius:6px; font-size:13px; min-height:48px; white-space:pre-wrap; }
   .fotos { display:flex; flex-wrap:wrap; gap:8px; }
   .badge { display:inline-block; padding:3px 10px; border-radius:999px; font-size:11px; font-weight:600; background:#eef; color:#225; }
+  .total { font-size:20px; margin:0; }
   .footer { margin-top:48px; display:flex; justify-content:space-between; gap:32px; }
   .sign { flex:1; border-top:1px solid #111; padding-top:6px; text-align:center; font-size:12px; color:#444; }
   @media print { body { padding:0; } button { display:none; } }
@@ -78,17 +79,7 @@ export function OrdemServicoDetalheModal({ open, onOpenChange, os }: Props) {
         <td class="label">Equipamento</td><td>${escapeHtml(os.equipamento)}</td></tr>
     <tr><td class="label">Nº de série</td><td>${escapeHtml(os.numero_serie ?? "—")}</td>
         <td class="label">Prioridade</td><td>${escapeHtml(os.prioridade ?? "—")}</td></tr>
-    <tr><td class="label">Data de entrada</td><td>${fmtDate(os.data_entrada)}</td>
-        <td class="label">Data de saída</td><td>${fmtDate(os.data_saida)}</td></tr>
-    <tr><td class="label">Valor</td><td colspan="3"><strong>${fmtBRL(os.valor)}</strong></td></tr>
-  </table>
-
-  <h2>Envio</h2>
-  <table class="grid">
-    <tr><td class="label">Nº de rastreio</td><td>${escapeHtml(os.numero_rastreio ?? "—")}</td>
-        <td class="label">Valor do frete</td><td>${fmtBRL(os.valor_frete)}</td></tr>
-    <tr><td class="label">Data do envio</td><td>${fmtDate(os.data_envio)}</td>
-        <td class="label">Status do envio</td><td>${escapeHtml(os.status_envio ?? "—")}</td></tr>
+    <tr><td class="label">Data de entrada</td><td colspan="3">${fmtDate(os.data_entrada)}</td></tr>
   </table>
 
   <h2>Defeito informado</h2>
@@ -101,6 +92,9 @@ export function OrdemServicoDetalheModal({ open, onOpenChange, os }: Props) {
   <div class="box">${escapeHtml(os.observacoes ?? "—")}</div>
 
   ${fotos ? `<h2>Fotos do equipamento</h2><div class="fotos">${fotos}</div>` : ""}
+
+  <h2>Valor total dos serviços</h2>
+  <p class="total"><strong>${fmtBRL(os.valor)}</strong></p>
 
   <div class="footer">
     <div class="sign">Assinatura do cliente</div>
@@ -140,12 +134,6 @@ export function OrdemServicoDetalheModal({ open, onOpenChange, os }: Props) {
               <Field label="Status" value={os.status ?? "—"} />
               <Field label="Prioridade" value={os.prioridade ?? "—"} />
               <Field label="Data de entrada" value={fmtDate(os.data_entrada)} />
-              <Field label="Data de saída" value={fmtDate(os.data_saida)} />
-              <Field label="Valor" value={fmtBRL(os.valor)} />
-              <Field label="Nº de rastreio" value={os.numero_rastreio ?? "—"} />
-              <Field label="Valor do frete" value={fmtBRL(os.valor_frete)} />
-              <Field label="Data do envio" value={fmtDate(os.data_envio)} />
-              <Field label="Status do envio" value={os.status_envio ?? "—"} />
             </section>
 
             <Block label="Defeito informado">{os.defeito_informado ?? "—"}</Block>
@@ -176,6 +164,13 @@ export function OrdemServicoDetalheModal({ open, onOpenChange, os }: Props) {
                 </div>
               </section>
             )}
+
+            <div className="flex items-center justify-between rounded-md border border-border bg-muted/30 px-4 py-3">
+              <span className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+                Valor total dos serviços:
+              </span>
+              <span className="text-lg font-bold">{fmtBRL(os.valor)}</span>
+            </div>
           </div>
         </DialogContent>
       </Dialog>
