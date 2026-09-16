@@ -59,6 +59,7 @@ export function OrdemServicoDetalheModal({ open, onOpenChange, os }: Props) {
   .box { border:1px solid #ddd; padding:10px 12px; border-radius:6px; font-size:13px; min-height:48px; white-space:pre-wrap; }
   .fotos { display:flex; flex-wrap:wrap; gap:8px; }
   .badge { display:inline-block; padding:3px 10px; border-radius:999px; font-size:11px; font-weight:600; background:#eef; color:#225; }
+  .total { font-size:20px; margin:0; }
   .footer { margin-top:48px; display:flex; justify-content:space-between; gap:32px; }
   .sign { flex:1; border-top:1px solid #111; padding-top:6px; text-align:center; font-size:12px; color:#444; }
   @media print { body { padding:0; } button { display:none; } }
