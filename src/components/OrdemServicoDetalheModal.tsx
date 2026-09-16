@@ -48,13 +48,15 @@ export function OrdemServicoDetalheModal({ open, onOpenChange, os }: Props) {
 <style>
   * { box-sizing: border-box; }
   body { font-family: -apple-system, Segoe UI, Roboto, sans-serif; color:#111; padding:32px; max-width:820px; margin:0 auto; }
-  h1 { font-size:22px; margin:0 0 4px; }
+  h1 { font-size:26px; letter-spacing:1px; margin:0 0 2px; }
   h2 { font-size:14px; margin:24px 0 8px; padding-bottom:4px; border-bottom:1px solid #ddd; color:#444; text-transform:uppercase; letter-spacing:.5px; }
-  .header { display:flex; justify-content:space-between; align-items:flex-start; border-bottom:2px solid #111; padding-bottom:12px; margin-bottom:16px; }
+  .header { text-align:center; border-bottom:2px solid #111; padding-bottom:12px; margin-bottom:16px; }
   .meta { font-size:12px; color:#666; }
+  .os-numero { font-size:13px; font-weight:600; margin:0 0 2px; }
+  .cliente { font-size:18px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; margin:0 0 14px; }
   table { width:100%; border-collapse:collapse; font-size:13px; }
   td { padding:6px 8px; vertical-align:top; }
-  td.label { width:160px; color:#555; font-weight:600; }
+  td.label { width:160px; color:#555; font-weight:600; text-transform:uppercase; font-size:11px; letter-spacing:.5px; }
   .grid { display:grid; grid-template-columns:1fr 1fr; gap:0 16px; }
   .box { border:1px solid #ddd; padding:10px 12px; border-radius:6px; font-size:13px; min-height:48px; white-space:pre-wrap; }
   .fotos { display:flex; flex-wrap:wrap; gap:8px; }
@@ -66,20 +68,18 @@ export function OrdemServicoDetalheModal({ open, onOpenChange, os }: Props) {
 </style>
 </head><body>
   <div class="header">
-    <div>
-     <h1>Ordem de Serviço #${String(os.numero_os).padStart(4, "0")}</h1>
-      <div class="meta">Emitido em ${format(new Date(), "dd/MM/yyyy HH:mm")}</div>
-    </div>
-    <div class="badge">${os.status ?? "—"}</div>
+    <h1>SmarTech</h1>
+    <div class="meta">Assistência Técnica — Emitido em ${format(new Date(), "dd/MM/yyyy HH:mm")}</div>
   </div>
 
-  <h2>Cliente & Equipamento</h2>
+  <p class="os-numero">Nº O.S.: ${String(os.numero_os).padStart(4, "0")}</p>
+  <p class="cliente">${escapeHtml(os.cliente)}</p>
+
   <table class="grid">
-    <tr><td class="label">Cliente</td><td>${escapeHtml(os.cliente)}</td>
-        <td class="label">Equipamento</td><td>${escapeHtml(os.equipamento)}</td></tr>
-    <tr><td class="label">Nº de série</td><td>${escapeHtml(os.numero_serie ?? "—")}</td>
-        <td class="label">Prioridade</td><td>${escapeHtml(os.prioridade ?? "—")}</td></tr>
-    <tr><td class="label">Data de entrada</td><td colspan="3">${fmtDate(os.data_entrada)}</td></tr>
+    <tr><td class="label">EQUIPAMENTO</td><td>${escapeHtml(os.equipamento)}</td>
+        <td class="label">Nº DE SÉRIE</td><td>${escapeHtml(os.numero_serie ?? "—")}</td></tr>
+    <tr><td class="label">DATA DE ENTRADA</td><td>${fmtDate(os.data_entrada)}</td>
+        <td class="label">STATUS</td><td>${escapeHtml(os.status ?? "—")}</td></tr>
   </table>
 
   <h2>Defeito informado</h2>
@@ -114,8 +114,8 @@ export function OrdemServicoDetalheModal({ open, onOpenChange, os }: Props) {
         <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto p-0">
           <div className="sticky top-0 z-10 flex items-center justify-between gap-3 border-b border-border bg-background/95 backdrop-blur px-6 py-4">
             <div>
-              <h2 className="text-xl font-bold">OS #{os.numero_os}</h2>
-              <p className="text-sm text-muted-foreground">{os.cliente}</p>
+              <h2 className="text-xl font-bold">SmarTech</h2>
+              <p className="text-sm text-muted-foreground">Ordem de Serviço</p>
             </div>
             <div className="flex items-center gap-2">
               <Button size="sm" onClick={handlePrint}>
@@ -128,12 +128,15 @@ export function OrdemServicoDetalheModal({ open, onOpenChange, os }: Props) {
           </div>
 
           <div className="px-6 py-5 space-y-6">
-            <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Field label="Equipamento" value={os.equipamento} />
-              <Field label="Nº de série" value={os.numero_serie ?? "—"} />
-              <Field label="Status" value={os.status ?? "—"} />
-              <Field label="Prioridade" value={os.prioridade ?? "—"} />
-              <Field label="Data de entrada" value={fmtDate(os.data_entrada)} />
+            <section className="border-b border-border pb-6">
+              <p className="text-sm font-semibold">Nº O.S.: {String(os.numero_os).padStart(4, "0")}</p>
+              <h3 className="text-lg font-bold uppercase tracking-wide mt-0.5">{os.cliente}</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <Field label="Equipamento" value={os.equipamento} />
+                <Field label="Nº de série" value={os.numero_serie ?? "—"} />
+                <Field label="Data de entrada" value={fmtDate(os.data_entrada)} />
+                <Field label="Status" value={os.status ?? "—"} />
+              </div>
             </section>
 
             <Block label="Defeito informado">{os.defeito_informado ?? "—"}</Block>
