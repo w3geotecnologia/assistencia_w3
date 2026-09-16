@@ -54,10 +54,9 @@ export function OrdemServicoDetalheModal({ open, onOpenChange, os }: Props) {
   .meta { font-size:12px; color:#666; }
   .os-numero { font-size:13px; font-weight:600; margin:0 0 2px; }
   .cliente { font-size:18px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; margin:0 0 14px; }
-  table { width:100%; border-collapse:collapse; font-size:13px; }
-  td { padding:6px 8px; vertical-align:top; }
-  td.label { width:160px; color:#555; font-weight:600; text-transform:uppercase; font-size:11px; letter-spacing:.5px; }
-  .grid { display:grid; grid-template-columns:1fr 1fr; gap:0 16px; }
+  .meta-line { font-size:13px; margin:0 0 8px; white-space:nowrap; }
+  .meta-line .lbl, .meta-row .lbl { font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.5px; color:#555; }
+  .meta-row { display:flex; gap:64px; font-size:13px; margin:0; white-space:nowrap; }
   .box { border:1px solid #ddd; padding:10px 12px; border-radius:6px; font-size:13px; min-height:48px; white-space:pre-wrap; }
   .fotos { display:flex; flex-wrap:wrap; gap:8px; }
   .badge { display:inline-block; padding:3px 10px; border-radius:999px; font-size:11px; font-weight:600; background:#eef; color:#225; }
@@ -75,12 +74,12 @@ export function OrdemServicoDetalheModal({ open, onOpenChange, os }: Props) {
   <p class="os-numero">Nº O.S.: ${String(os.numero_os).padStart(4, "0")}</p>
   <p class="cliente">${escapeHtml(os.cliente)}</p>
 
-  <table class="grid">
-    <tr><td class="label">EQUIPAMENTO</td><td>${escapeHtml(os.equipamento)}</td>
-        <td class="label">Nº DE SÉRIE</td><td>${escapeHtml(os.numero_serie ?? "—")}</td></tr>
-    <tr><td class="label">DATA DE ENTRADA</td><td>${fmtDate(os.data_entrada)}</td>
-        <td class="label">STATUS</td><td>${escapeHtml(os.status ?? "—")}</td></tr>
-  </table>
+  <p class="meta-line"><span class="lbl">EQUIPAMENTO:</span> ${escapeHtml(os.equipamento)}</p>
+  <div class="meta-row">
+    <div><span class="lbl">Nº DE SÉRIE:</span> ${escapeHtml(os.numero_serie ?? "—")}</div>
+    <div><span class="lbl">DATA DE ENTRADA:</span> ${fmtDate(os.data_entrada)}</div>
+    <div><span class="lbl">STATUS:</span> ${escapeHtml(os.status ?? "—")}</div>
+  </div>
 
   <h2>Defeito informado</h2>
   <div class="box">${escapeHtml(os.defeito_informado ?? "—")}</div>
