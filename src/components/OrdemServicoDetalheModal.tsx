@@ -78,17 +78,7 @@ export function OrdemServicoDetalheModal({ open, onOpenChange, os }: Props) {
         <td class="label">Equipamento</td><td>${escapeHtml(os.equipamento)}</td></tr>
     <tr><td class="label">Nº de série</td><td>${escapeHtml(os.numero_serie ?? "—")}</td>
         <td class="label">Prioridade</td><td>${escapeHtml(os.prioridade ?? "—")}</td></tr>
-    <tr><td class="label">Data de entrada</td><td>${fmtDate(os.data_entrada)}</td>
-        <td class="label">Data de saída</td><td>${fmtDate(os.data_saida)}</td></tr>
-    <tr><td class="label">Valor</td><td colspan="3"><strong>${fmtBRL(os.valor)}</strong></td></tr>
-  </table>
-
-  <h2>Envio</h2>
-  <table class="grid">
-    <tr><td class="label">Nº de rastreio</td><td>${escapeHtml(os.numero_rastreio ?? "—")}</td>
-        <td class="label">Valor do frete</td><td>${fmtBRL(os.valor_frete)}</td></tr>
-    <tr><td class="label">Data do envio</td><td>${fmtDate(os.data_envio)}</td>
-        <td class="label">Status do envio</td><td>${escapeHtml(os.status_envio ?? "—")}</td></tr>
+    <tr><td class="label">Data de entrada</td><td colspan="3">${fmtDate(os.data_entrada)}</td></tr>
   </table>
 
   <h2>Defeito informado</h2>
@@ -101,6 +91,9 @@ export function OrdemServicoDetalheModal({ open, onOpenChange, os }: Props) {
   <div class="box">${escapeHtml(os.observacoes ?? "—")}</div>
 
   ${fotos ? `<h2>Fotos do equipamento</h2><div class="fotos">${fotos}</div>` : ""}
+
+  <h2>Valor total dos serviços</h2>
+  <p class="total"><strong>${fmtBRL(os.valor)}</strong></p>
 
   <div class="footer">
     <div class="sign">Assinatura do cliente</div>
