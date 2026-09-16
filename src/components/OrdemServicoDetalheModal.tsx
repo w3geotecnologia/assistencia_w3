@@ -134,12 +134,6 @@ export function OrdemServicoDetalheModal({ open, onOpenChange, os }: Props) {
               <Field label="Status" value={os.status ?? "—"} />
               <Field label="Prioridade" value={os.prioridade ?? "—"} />
               <Field label="Data de entrada" value={fmtDate(os.data_entrada)} />
-              <Field label="Data de saída" value={fmtDate(os.data_saida)} />
-              <Field label="Valor" value={fmtBRL(os.valor)} />
-              <Field label="Nº de rastreio" value={os.numero_rastreio ?? "—"} />
-              <Field label="Valor do frete" value={fmtBRL(os.valor_frete)} />
-              <Field label="Data do envio" value={fmtDate(os.data_envio)} />
-              <Field label="Status do envio" value={os.status_envio ?? "—"} />
             </section>
 
             <Block label="Defeito informado">{os.defeito_informado ?? "—"}</Block>
