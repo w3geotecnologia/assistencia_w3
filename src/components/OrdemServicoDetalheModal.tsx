@@ -144,11 +144,18 @@ export function OrdemServicoDetalheModal({ open, onOpenChange, os }: Props) {
             <Block label="Defeito constatado">{os.defeito_constatado ?? "—"}</Block>
             <Block label="Observações">{os.observacoes ?? "—"}</Block>
 
-            {os.fotos && os.fotos.length > 0 && (
-              <section>
-                <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-2">
-                  Fotos do equipamento
-                </h3>
+            <div className="flex items-center justify-between rounded-md border border-border bg-muted/30 px-4 py-3">
+              <span className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+                Valor total dos serviços:
+              </span>
+              <span className="text-lg font-bold">{fmtBRL(os.valor)}</span>
+            </div>
+
+            <section>
+              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-2">
+                Fotos do equipamento
+              </h3>
+              {os.fotos && os.fotos.length > 0 ? (
                 <div className="flex flex-wrap gap-3">
                   {os.fotos.map((url, idx) => (
                     <button
@@ -166,15 +173,12 @@ export function OrdemServicoDetalheModal({ open, onOpenChange, os }: Props) {
                     </button>
                   ))}
                 </div>
-              </section>
-            )}
-
-            <div className="flex items-center justify-between rounded-md border border-border bg-muted/30 px-4 py-3">
-              <span className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-                Valor total dos serviços:
-              </span>
-              <span className="text-lg font-bold">{fmtBRL(os.valor)}</span>
-            </div>
+              ) : (
+                <p className="text-sm text-muted-foreground">
+                  Nenhuma foto anexada (até 3). Adicione fotos ao editar a OS.
+                </p>
+              )}
+            </section>
           </div>
         </DialogContent>
       </Dialog>
