@@ -164,6 +164,13 @@ export function OrdemServicoDetalheModal({ open, onOpenChange, os }: Props) {
                 </div>
               </section>
             )}
+
+            <div className="flex items-center justify-between rounded-md border border-border bg-muted/30 px-4 py-3">
+              <span className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+                Valor total dos serviços:
+              </span>
+              <span className="text-lg font-bold">{fmtBRL(os.valor)}</span>
+            </div>
           </div>
         </DialogContent>
       </Dialog>
