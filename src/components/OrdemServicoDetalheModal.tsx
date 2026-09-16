@@ -101,7 +101,6 @@ export function OrdemServicoDetalheModal({ open, onOpenChange, os }: Props) {
     <div class="sign">Assinatura do cliente</div>
     <div class="sign">Assinatura do técnico</div>
   </div>
-  </div>
 
   <script>
     window.onload = () => { setTimeout(() => window.print(), 350); };
