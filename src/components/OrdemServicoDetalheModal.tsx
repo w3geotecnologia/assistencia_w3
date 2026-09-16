@@ -74,12 +74,12 @@ export function OrdemServicoDetalheModal({ open, onOpenChange, os }: Props) {
   <p class="os-numero">Nº O.S.: ${String(os.numero_os).padStart(4, "0")}</p>
   <p class="cliente">${escapeHtml(os.cliente)}</p>
 
-  <table class="grid">
-    <tr><td class="label">EQUIPAMENTO</td><td>${escapeHtml(os.equipamento)}</td>
-        <td class="label">Nº DE SÉRIE</td><td>${escapeHtml(os.numero_serie ?? "—")}</td></tr>
-    <tr><td class="label">DATA DE ENTRADA</td><td>${fmtDate(os.data_entrada)}</td>
-        <td class="label">STATUS</td><td>${escapeHtml(os.status ?? "—")}</td></tr>
-  </table>
+  <p class="meta-line"><span class="lbl">EQUIPAMENTO:</span> ${escapeHtml(os.equipamento)}</p>
+  <div class="meta-row">
+    <div><span class="lbl">Nº DE SÉRIE:</span> ${escapeHtml(os.numero_serie ?? "—")}</div>
+    <div><span class="lbl">DATA DE ENTRADA:</span> ${fmtDate(os.data_entrada)}</div>
+    <div><span class="lbl">STATUS:</span> ${escapeHtml(os.status ?? "—")}</div>
+  </div>
 
   <h2>Defeito informado</h2>
   <div class="box">${escapeHtml(os.defeito_informado ?? "—")}</div>
