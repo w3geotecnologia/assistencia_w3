@@ -5,6 +5,7 @@ import {
   Users,
   Package,
   LogOut,
+  Settings,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuthContext } from "@/components/AuthProvider";
@@ -25,12 +26,12 @@ export function Sidebar() {
   return (
     <aside className="app-sidebar hidden w-52 shrink-0 flex-col overflow-hidden border-r bg-card transition-[width] duration-200 md:flex">
       <div className="flex items-center gap-2 px-3 py-5 border-b">
-        <div className="h-9 w-9 rounded-lg bg-primary text-primary-foreground grid place-items-center overflow-hidden">
-          <img src="/favicon.png" alt="W3-Gotecnologia" className="h-6 w-6 object-contain" />
+        <div className="h-9 w-9 rounded-lg bg-primary text-primary-foreground grid place-items-center">
+          <Settings className="h-5 w-5" />
         </div>
         <div className="sidebar-copy min-w-0 whitespace-nowrap transition-opacity duration-150">
-          <p className="text-sm font-bold leading-tight">W3-Gotecnologia</p>
-          <p className="text-xs text-muted-foreground">Assistência Técnica</p>
+          <p className="text-sm font-bold leading-tight">SmarTech</p>
+          <p className="text-xs text-muted-foreground">Controle de OS</p>
         </div>
       </div>
 
